@@ -26,15 +26,17 @@ export enum HiringFrontendTakeHomeToppingQuantity {
   Light = "light",
   Regular = "regular",
   Extra = "extra",
+  None = 'none'
 }
 
 // Represents a single topping with its quantity
-type PizzaTopping = {
+export type PizzaTopping = {
   name: HiringFrontendTakeHomePizzaToppings;
   quantity: HiringFrontendTakeHomeToppingQuantity;
+  price: number;
 };
 
-type Pizza = {
+export type Pizza = {
   type: HiringFrontendTakeHomePizzaType;
   size: HiringFrontendTakeHomePizzaSize;
   // For specialty pizzas, we only add extra toppings in the toppings array
@@ -45,6 +47,15 @@ type Pizza = {
   quantity: number;
   totalPrice: number;
 };
+
+export type FormPizza =  {
+  type: HiringFrontendTakeHomePizzaType | '';
+  size: HiringFrontendTakeHomePizzaSize | '';
+  toppings?: PizzaTopping[];
+  toppingExclusions?: HiringFrontendTakeHomePizzaToppings[];
+  quantity: number;
+  totalPrice: number;
+}
 
 type OrderItem = {
   id: string;
@@ -119,3 +130,96 @@ export type SpecialtyPizza = {
   description: string;
   price: Record<HiringFrontendTakeHomePizzaSize, number>;
 };
+
+
+//////
+
+export interface PizzaSizeInfo {
+  id: string;
+  basePrice: number;
+}
+
+export enum PizzaSize {
+  SMALL = 'Small',
+  MEDIUM = 'Medium',
+  LARGE = 'Large',
+}
+
+export enum PizzaType {
+  PEPPERONI = 'Pepperoni',
+  SUPREME = 'Supreme',
+  MEAT_LOVERS = 'Meat-lovers',
+  VEGGIE = 'Veggie',
+  VEGAN = 'Vegan', 
+  PESTO = 'Pesto',
+  CUSTOM = 'Custom'
+}
+export type PaymentOption = 'Cash' | 'Credit';
+
+export type DeliveryType = 'Pickup' | 'Delivery';
+
+export type Topping = 'Cheese' | 'Onions' | 'Olives' | 'Pepperoni' | 'Sausage' | 'Peppers' | 'Beyond Pepperoni' | 'Vegan Cheese' | 'Pesto';
+
+export interface PizzaFormData {
+  type: PizzaType | '';
+  size: PizzaSize | '';
+  toppings: Topping[];
+  price: number;
+}
+
+export const PIZZA_SIZES: Record<PizzaSize, PizzaSizeInfo> = {
+  "Small": {
+    id: '1',
+    basePrice: 10.99,
+  },
+  "Medium": {
+    id: '2',
+    basePrice: 12.99,
+  },
+ "Large": {
+    id: '2',
+    basePrice: 14.99,
+  }
+};
+
+export interface CartPizza {
+  id: string;
+  size: PizzaSize;
+  type: PizzaType;
+  toppings: Topping[];
+  price: number;
+  quantity: number;
+}
+
+export interface CustomerFormData {
+deliveryType?: string;
+email?: string;
+name?: string;
+paymentType?: PaymentOption;
+creditCardNumber?: string;
+cvv?: string; 
+expiryDate?: Date;
+addressLine1?: string;
+zipCode: string;
+city: string;
+state: string; 
+}
+
+export interface CartState {
+  customerInfo: {
+    deliveryType: DeliveryType;
+    email: string;
+    name: string;
+    phone: string;
+    paymentType: PaymentOption;
+    addressLine1?: string; 
+    city?: string; 
+    state?: string; 
+    zipCode?: string; 
+    creditCardNumber?: string;
+    cvv?: string; 
+    expiryDate?: Date;
+  }
+  items: CartPizza[];
+  totalCost: number;
+}
