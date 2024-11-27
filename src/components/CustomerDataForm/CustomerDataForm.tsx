@@ -86,16 +86,16 @@ type ICustomerDataFormProps = {
         <FormSection>
            <Label>Delivery Type</Label>
            <Select name='deliveryType' value={formData.deliveryType} onChange={handleChange} required>
-            <option value="Pickup">Pickup</option>
-            <option value="Delivery">Delivery</option>
+            <option value="pickup">Pickup</option>
+            <option value="delivery">Delivery</option>
           </Select>
         </FormSection>
 
         <FormSection>
            <Label>Payment Type</Label>
            <Select name='paymentType' value={formData.paymentType} onChange={handleChange} required>
-            <option value="Cash">Cash</option>
-            <option value="Credit">Credit</option>
+            <option value="cash">Cash</option>
+            <option value="credit_card">Credit</option>
           </Select>
         </FormSection>
 

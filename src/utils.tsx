@@ -36,6 +36,7 @@ export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza
     // console.log(pizzas)
     const requestData = {
         items: ([] as OrderItem[]),
+        locationId: 'm-kornis',
         customer: {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -47,9 +48,9 @@ export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza
             zipCode: formData.zipCode
         }},
         totalAmount: totalCost,
-        paymentMethod: formData.paymentType || HiringFrontendTakeHomePaymentMethod['Cash'],
+        paymentMethod: formData.paymentType || HiringFrontendTakeHomePaymentMethod.Cash as HiringFrontendTakeHomePaymentMethod,
         creditCardNumber: formData.creditCardNumber,
-        type: formData.deliveryType || HiringFrontendTakeHomeOrderType.Pickup
+        type: formData.deliveryType || HiringFrontendTakeHomeOrderType.Pickup as HiringFrontendTakeHomeOrderType
     }
 
     const orderPizzas = pizzas.map((pizza) => {

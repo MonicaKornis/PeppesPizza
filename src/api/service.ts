@@ -1,7 +1,7 @@
 import { HiringFrontendTakeHomeOrderRequest } from "../types";
 
 export const createPizzaOrder = async function submitOrder(orderData: HiringFrontendTakeHomeOrderRequest) {
-    const response = await fetch('/api/orders', {
+    const response = await fetch('https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)

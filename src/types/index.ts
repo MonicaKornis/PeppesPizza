@@ -155,9 +155,9 @@ export enum PizzaType {
   PESTO = 'Pesto',
   CUSTOM = 'Custom'
 }
-export type PaymentOption = 'Cash' | 'Credit';
+// export type PaymentOption = 'Cash' | 'Credit';
 
-export type DeliveryType = 'Pickup' | 'Delivery';
+// export type DeliveryType = 'Pickup' | 'Delivery';
 
 export type Topping = 'Cheese' | 'Onions' | 'Olives' | 'Pepperoni' | 'Sausage' | 'Peppers' | 'Beyond Pepperoni' | 'Vegan Cheese' | 'Pesto';
 
@@ -196,7 +196,7 @@ export interface CustomerFormData {
   deliveryType?: string;
   email?: string;
   name?: string;
-  paymentType?: PaymentOption;
+  paymentType?: HiringFrontendTakeHomePaymentMethod;
   creditCardNumber?: string;
   cvv?: string; 
   expiryDate?: Date;
