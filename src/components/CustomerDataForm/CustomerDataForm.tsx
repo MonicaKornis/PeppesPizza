@@ -1,6 +1,8 @@
+// @ts-nocheck
 import React, { useState } from 'react';
-import { CustomerFormData } from '../../types/index';
-import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Select, Input, ErrorMessage , SummaryTitle, OrderSummary} from './style.js' ;
+import { CustomerFormData, CustomerFormErrors } from '../../types/index';
+import {FormContainer, Title, SubmitButton, FormSection, Label, Select, Input, ErrorMessage} from './style.ts' ;
+import { useCart } from './../../context/cart/cart-context.js';
   
   
   const CustomerDataForm: React.FC = () => {
@@ -15,9 +17,10 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
         paymentType: "Cash",
         creditCardNumber: '',
         expiryDate: undefined,
+        formInvalid: true,
       });
 
-      const [formErrors] = useState<CustomerFormData>({
+      const [formErrors] = useState<CustomerFormErrors>({
         deliveryType: '',
         email: '',
         name: '',
@@ -25,16 +28,16 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
         city: '',
         state: '',
         zipCode: '',
-        paymentType: "Cash",
+        paymentType: '',
         creditCardNumber: '',
-        expiryDate: undefined,
+        expiryDate: '',
+        cvv: '',
       });
-    
-    // const showCreditCardInputs = (formData.paymentType == 'Credit' || false);
   
+    const { cart } = useCart();
+
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
       const {name, value } = e.target;
-        // console.log(value )
       setFormData(prev => {
         return {
             ...prev,
@@ -44,10 +47,14 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const valid = checkIfFormValid();
+        if(valid) {
+          const data = transformData(formData, cart);
+        }
     }
   
 
-   const creditCardSection = formData.paymentType == "Credit" ? (<><Title>Credit Card Info</Title>
+  const creditCardSection = formData.paymentType == "Credit" ? (<><Title>Credit Card Info</Title>
         <FormSection>
            <Label>Credit Card Number</Label>
            <Input value={formData.creditCardNumber} type="number" name='creditCardNumber' onChange={handleChange} required/>
@@ -62,7 +69,7 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
            <Input name='cvv' type="number" value={formData.cvv} onChange={handleChange} required/>
         </FormSection></>) : null
 
- const addressSection = formData.deliveryType == "Delivery" ? (<><Title>Delivery Info</Title>
+  const addressSection = formData.deliveryType == "Delivery" ? (<><Title>Delivery Info</Title>
     <FormSection>
        <Label>Address</Label>
        <Input value={formData.addressLine1} name='addressLine1' onChange={handleChange} required/>
@@ -81,6 +88,7 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
     </FormSection>
     </>) : null
   
+  console.log(formData.formValid)
     return (
 
       <FormContainer>
@@ -116,15 +124,7 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
        
         {addressSection}
         {creditCardSection}
-
-        <OrderSummary>
-          <SummaryTitle>Item Total</SummaryTitle>
-          <SummaryText>
-            {/* Price: {formData.price ? `${formData.price}` :'$0'}  PULL ITEMS FROM CONTEXT LATER TO CALCULATE*/} 
-            
-          </SummaryText>
-        </OrderSummary>
-        <SubmitButton>Submit Order
+        <SubmitButton disabled={formData.formInvalid} inactive={formData.formInvalid}>Submit Order
         </SubmitButton>
       </div>
       </form>

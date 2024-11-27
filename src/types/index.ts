@@ -55,7 +55,7 @@ export type FormPizza =  {
   toppingExclusions: HiringFrontendTakeHomePizzaToppings[];
   quantity: number;
   totalPrice: number;
-  id: string;
+  id?: string;
 }
 
 export type OrderItem = {
@@ -193,17 +193,32 @@ export const PIZZA_SIZES: Record<PizzaSize, PizzaSizeInfo> = {
 // }
 
 export interface CustomerFormData {
-deliveryType?: string;
-email?: string;
-name?: string;
-paymentType?: PaymentOption;
-creditCardNumber?: string;
-cvv?: string; 
-expiryDate?: Date;
-addressLine1?: string;
-zipCode: string;
-city: string;
-state: string; 
+  deliveryType?: string;
+  email?: string;
+  name?: string;
+  paymentType?: PaymentOption;
+  creditCardNumber?: string;
+  cvv?: string; 
+  expiryDate?: Date;
+  addressLine1?: string;
+  zipCode: string;
+  city: string;
+  state: string; 
+  formInvalid: boolean;
+}
+
+export interface CustomerFormErrors {
+  deliveryType: string;
+  email: string;
+  name: string;
+  paymentType: string;
+  creditCardNumber?: string;
+  cvv: string; 
+  expiryDate: string;
+  addressLine1?: string;
+  zipCode: string;
+  city: string;
+  state: string; 
 }
 
 // export interface CartState {

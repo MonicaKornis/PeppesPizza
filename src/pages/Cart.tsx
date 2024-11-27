@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import AddToCartButton from './../components/AddToCartButton/AddToCardButton.tsx';
+import AddToCartButton from './../components/AddToCartButton/AddToCartButton.tsx';
 import { useCart } from './../context/cart/cart-context';
 import { useNavigate } from 'react-router-dom';
 import { PizzaTopping, FormPizza } from '../types/index.ts';

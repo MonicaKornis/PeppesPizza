@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const FormContainer = styled.div`
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   max-width: 400px;
+    /* margin: 0 auto; */
+    width: 82%;
+    padding: 1em;
+    background-color: white;
+    border-radius: 8px;
+    margin: 29px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export const Title = styled.h2`
@@ -131,10 +133,11 @@ export const ErrorMessage = styled.p`
     color: 	#880808
 `;  
 
-
-export const SubmitButton = styled.button`
+// styled.button<{ selected?: boolean }>`
+//   background-color: ${props => props.selected ? '#4a4a4a' : '#6a6a6a'};
+export const SubmitButton = styled.button<{ inactive: boolean }>`
   width: 100%;
-  background-color: #3182ce;
+  background-color: ${props => props.inactive ? '#4a4a4a' : '#3182ce;'};
   color: white;
   border: none;
   border-radius: 0rem 0.375rem 0.375rem 0rem;

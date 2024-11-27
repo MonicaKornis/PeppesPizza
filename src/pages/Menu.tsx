@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PizzaOrderForm2 from '../components/PizzaOrderForm/PizzaOrderForm2';
-
+import { fetchMenuData } from './../api/service';
 
 const Menu = () =>  {
 
@@ -10,12 +10,9 @@ const Menu = () =>  {
 
   useEffect(() => {
     const fetchData = async () => {
-      const urls = ['https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/specialty-pizzas', 'https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza-pricing'];
+      // const urls = ['https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/specialty-pizzas', 'https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza-pricing'];
       try {
-        const data = await Promise.all(urls.map(async url => {
-          const resp = await fetch(url);
-          return resp.json();
-        }));
+        const data = await fetchMenuData();
         const pizzaTypes = data[0].specialtyPizzas;
         const pizzaData = {}
         pizzaData['custom'] = {
@@ -34,6 +31,7 @@ const Menu = () =>  {
         });
         setIsLoading(false);
       } catch (err) {
+        console.log(err)
         const errMessage = typeof err == 'string' ? err : JSON.stringify(err)
         setError(errMessage);
         setIsLoading(false);

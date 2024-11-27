@@ -29,3 +29,4 @@ export const transformToTitleCase = (string: string) => {
     })
     return newLabel.join(' ')
 }
+

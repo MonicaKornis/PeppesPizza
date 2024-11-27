@@ -2,7 +2,7 @@ import React , { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {ButtonContainer, SubmitButton, AmmountOptions} from './styles';
 import { FormPizza } from '../../types/index';
-import { useCart } from "./../../context/cart/cart-context";
+import { useCart } from "../../context/cart/cart-context";
 
 type IAddToCartButtonProps = {
     buttonType: string;
@@ -24,7 +24,6 @@ const AddToCartButton: FunctionComponent<IAddToCartButtonProps>  = ({buttonType,
     }
 
      const handleSubmit = (): void => {
-      console.log(ammountToAdd)
       updateCart(orderData, ammountToAdd) 
       if(buttonType === 'add') navigate("/cart");
     };

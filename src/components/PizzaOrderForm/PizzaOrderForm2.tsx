@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { PizzaSize, PizzaType, PizzaTopping, FormPizza, HiringFrontendTakeHomePizzaType, HiringFrontendTakeHomePizzaSize, HiringFrontendTakeHomeToppingQuantity, HiringFrontendTakeHomePizzaToppings } from '../../types/index';
 import {FormContainer, Title, MenuOption, ToppingAmountButton , FormSection, Label, SummaryText, Select, ToppingsContainer, ToppingItem, SummaryTitle, ToppingLabel, OrderSummary} from './style.ts';
-import AddToCartButton from './../AddToCartButton/AddToCardButton.tsx';
+import AddToCartButton from './../AddToCartButton/AddToCartButton.tsx';
 import { transformToTitleCase } from './../../utils.tsx';
 
 const PizzaOrderForm2 = ({toppings, pizzaData}) => {
