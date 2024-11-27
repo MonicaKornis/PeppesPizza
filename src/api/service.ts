@@ -13,7 +13,7 @@ export const createPizzaOrder = async function submitOrder(orderData: HiringFron
     }
    
     return await response.json();
-   }
+}
 
 export const fetchMenuData = async () => {
     const urls = ['https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/specialty-pizzas', 'https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza-pricing'];

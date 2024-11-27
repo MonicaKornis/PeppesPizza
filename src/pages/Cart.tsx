@@ -9,7 +9,7 @@ import { PizzaTopping, FormPizza } from '../types/index.ts';
 // Styled Components
 const CartContainer = styled.div`
   max-width: 32rem;
-  margin: 0 auto;
+  margin: 32px auto;
   background: white;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

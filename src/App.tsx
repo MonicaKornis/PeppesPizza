@@ -1,24 +1,24 @@
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import './App.css';
 import Home  from './pages/Home.tsx';
 import Menu from './pages/Menu.tsx';
 import Cart from './pages/Cart.tsx';
 import Checkout from './pages/Checkout.tsx';
+import OrderStatus from './pages/OrderStatus'
 import CartProvider from "./context/cart/CartProvider";
+import NavBar from "./components/NavBar/Navbar.tsx";
+
 
 const App = () => (
   <div className="App">
     <CartProvider>
-    <nav>
-        <div><Link to="/">Home</Link></div>
-        <div><Link to="/menu">Menu</Link></div>
-        <div><Link to="/cart">Cart</Link></div>
-    </nav>
+    <NavBar/>
     <Routes>
       <Route path="/" element={ <Home/> } />
       <Route path="/menu" element={ <Menu/> } />
       <Route path="/cart" element={ <Cart/> } />
       <Route path="/checkout" element={ <Checkout/> } />
+      <Route path="/orderstatus" element={ <OrderStatus/> } />
     </Routes>
     </CartProvider>
 </div>

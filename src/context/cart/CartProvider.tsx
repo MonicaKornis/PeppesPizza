@@ -15,7 +15,7 @@ export default function CartProvider({
 
   const addAmmountToCart = (item: FormPizza, ammount: number) => {
     const existingItem: FormPizza | null = checkIfDuplicates(item, cart);
-    const newItem = existingItem ? { ...existingItem, quantity: existingItem.quantity + ammount } : { ...item, id: new uuid(), quantity: ammount};
+    const newItem = existingItem ? { ...existingItem, quantity: existingItem.quantity + ammount } : { ...item, id: uuid(), quantity: ammount};
     // console.log(existingItem)
     updateCart((prevCart: CartState) => {
       const items = [...prevCart.items];

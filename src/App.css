@@ -6,3 +6,7 @@
   p {
     font-family: "Josefin Sans", serif;
   }
+
+  a {
+    text-decoration: none;
+  }

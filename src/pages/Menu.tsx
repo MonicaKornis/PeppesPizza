@@ -48,7 +48,7 @@ const Menu = () =>  {
 
    return (
     <>
-    <h1>Menu Page</h1>
+    {/* <h1>Menu Page</h1> */}
     <PizzaOrderForm2 toppings={fetchedData.toppings} pizzaData={fetchedData.pizzas}/>
     </>
    )

@@ -205,12 +205,13 @@ export interface CustomerFormData {
   city: string;
   state: string; 
   formInvalid: boolean;
+  firstName: string;
+  lastName: string;
 }
 
 export interface CustomerFormErrors {
   deliveryType: string;
   email: string;
-  name: string;
   paymentType: string;
   creditCardNumber?: string;
   cvv: string; 
@@ -219,6 +220,8 @@ export interface CustomerFormErrors {
   zipCode: string;
   city: string;
   state: string; 
+  firstName: string;
+  lastName: string;
 }
 
 // export interface CartState {

@@ -133,8 +133,6 @@ export const ErrorMessage = styled.p`
     color: 	#880808
 `;  
 
-// styled.button<{ selected?: boolean }>`
-//   background-color: ${props => props.selected ? '#4a4a4a' : '#6a6a6a'};
 export const SubmitButton = styled.button<{ inactive: boolean }>`
   width: 100%;
   background-color: ${props => props.inactive ? '#4a4a4a' : '#3182ce;'};
@@ -149,7 +147,7 @@ export const SubmitButton = styled.button<{ inactive: boolean }>`
   height: 35px;
 
   &:hover {
-    background-color: #2c5282;
+    background-color:${props => props.inactive ? '#4a4a4a' : '#2c5282;'};
   }
 
   &:focus {

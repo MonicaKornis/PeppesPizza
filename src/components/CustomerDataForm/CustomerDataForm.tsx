@@ -1,60 +1,32 @@
-// @ts-nocheck
-import React, { useState } from 'react';
-import { CustomerFormData, CustomerFormErrors } from '../../types/index';
-import {FormContainer, Title, SubmitButton, FormSection, Label, Select, Input, ErrorMessage} from './style.ts' ;
-import { useCart } from './../../context/cart/cart-context.js';
-  
-  
-  const CustomerDataForm: React.FC = () => {
-    const [formData, setFormData] = useState<CustomerFormData>({
-        deliveryType: '',
-        email: '',
-        name: '',
-        addressLine1:'',
-        city: '',
-        state: '',
-        zipCode: '',
-        paymentType: "Cash",
-        creditCardNumber: '',
-        expiryDate: undefined,
-        formInvalid: true,
-      });
 
-      const [formErrors] = useState<CustomerFormErrors>({
-        deliveryType: '',
-        email: '',
-        name: '',
-        addressLine1:'',
-        city: '',
-        state: '',
-        zipCode: '',
-        paymentType: '',
-        creditCardNumber: '',
-        expiryDate: '',
-        cvv: '',
-      });
+// import React, {  } from 'react';
+// import { CustomerFormData, CustomerFormErrors } from '../../types/index';
+import { checkIfFormValid } from './../../utils.tsx';
+import {FormContainer, Title, SubmitButton, FormSection, Label, Select, Input, ErrorMessage} from './style.ts' ;
+
+
+type ICustomerDataFormProps = {
+  formData: any;
+  setFormData: (formData) => void; 
+  formErrors: any;
+  handleSubmit: (e: React.FormEvent) => void; 
+}
   
-    const { cart } = useCart();
+  const CustomerDataForm: React.FC<ICustomerDataFormProps> = ({ formData, setFormData, formErrors, handleSubmit}) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
       const {name, value } = e.target;
       setFormData(prev => {
         return {
             ...prev,
-            [name]: value,    
+            [name]: value,  
         }});
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const valid = checkIfFormValid();
-        if(valid) {
-          const data = transformData(formData, cart);
-        }
-    }
-  
 
-  const creditCardSection = formData.paymentType == "Credit" ? (<><Title>Credit Card Info</Title>
+    const formInvalid = !checkIfFormValid(formData);
+
+    const creditCardSection = formData.paymentType == "Credit" ? (<><Title>Credit Card Info</Title>
         <FormSection>
            <Label>Credit Card Number</Label>
            <Input value={formData.creditCardNumber} type="number" name='creditCardNumber' onChange={handleChange} required/>
@@ -62,7 +34,7 @@ import { useCart } from './../../context/cart/cart-context.js';
         </FormSection>
         <FormSection>
            <Label>Expiry Date</Label>
-           <Input name='expiryDate' value={formData.expiryDate} type="Date" required/>
+           <Input name='expiryDate' value={formData.expiryDate} type="Date" onChange={handleChange} required/>
         </FormSection>
         <FormSection>
            <Label>CVV</Label>
@@ -87,8 +59,8 @@ import { useCart } from './../../context/cart/cart-context.js';
        <Input name='zipCode' type="number" value={formData.zipCode} onChange={handleChange} required/>
     </FormSection>
     </>) : null
-  
-  console.log(formData.formValid)
+
+    console.log(handleSubmit)
     return (
 
       <FormContainer>
@@ -96,9 +68,15 @@ import { useCart } from './../../context/cart/cart-context.js';
       <form onSubmit={handleSubmit}>
       <div>
         <FormSection>
-          <Label>Name</Label>
-          <Input name='name' value={formData.name} onChange={handleChange} required/>
+          <Label>First Name</Label>
+          <Input name='firstName' value={formData.firstName} onChange={handleChange} required/>
         </FormSection>
+
+        <FormSection>
+          <Label>Last Name</Label>
+          <Input name='lastName' value={formData.lastName} onChange={handleChange} required/>
+        </FormSection>
+
 
         <FormSection>
           <Label>Email</Label>
@@ -124,7 +102,7 @@ import { useCart } from './../../context/cart/cart-context.js';
        
         {addressSection}
         {creditCardSection}
-        <SubmitButton disabled={formData.formInvalid} inactive={formData.formInvalid}>Submit Order
+        <SubmitButton disabled={formInvalid} inactive={formInvalid}>Submit Order
         </SubmitButton>
       </div>
       </form>
