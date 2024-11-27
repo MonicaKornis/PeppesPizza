@@ -1,7 +1,8 @@
+// @ts-nocheck
 import React, { useState } from 'react';
-import { PizzaSize, PizzaType, PizzaTopping, PizzaFormData, Topping, PIZZA_SIZES, FormPizza } from '../../types/index';
-import {FormContainer, Title, MenuOption, ToppingAmountButton , SubmitButton, FormSection, Label, SummaryText, Select, ToppingsContainer, ToppingItem, Checkbox, SummaryTitle, ToppingLabel, OrderSummary, AddMoreToppingsButton} from './style.ts';
-import AddToCartButton from './../AddToCartButton/AddToCardButton.js';
+import { PizzaSize, PizzaType, PizzaTopping, FormPizza, HiringFrontendTakeHomePizzaType, HiringFrontendTakeHomePizzaSize, HiringFrontendTakeHomeToppingQuantity, HiringFrontendTakeHomePizzaToppings } from '../../types/index';
+import {FormContainer, Title, MenuOption, ToppingAmountButton , FormSection, Label, SummaryText, Select, ToppingsContainer, ToppingItem, SummaryTitle, ToppingLabel, OrderSummary} from './style.ts';
+import AddToCartButton from './../AddToCartButton/AddToCardButton.tsx';
 import { transformToTitleCase } from './../../utils.tsx';
 
 const PizzaOrderForm2 = ({toppings, pizzaData}) => {
@@ -11,8 +12,10 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
     toppings: [],
     toppingExclusions: [],
     totalPrice: 0,
-    quantity: 0
+    quantity: 0,
+    id: ''
   });
+  
   
   const pizzaTypes = Object.keys(pizzaData);
 
@@ -26,10 +29,10 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const selectedType = e.target.value as PizzaType | '';
-    setFormData(prev => {
+    setFormData((prev: FormPizza) => {
       return {
         ...prev,
-        type: selectedType,
+        type: selectedType as HiringFrontendTakeHomePizzaType,
         toppings: [],
         toppingExclusions: [],
         totalPrice: formData.size.length > 0 && formData.type.length > 0 && selectedType.length > 0 ?  pizzaData[selectedType].price[formData.size] : 0,
@@ -40,9 +43,9 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
   const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const newSize = e.target.value as PizzaSize | ''
     
-    setFormData((prev: any) => ({
+    setFormData((prev: FormPizza) => ({
       ...prev,
-      size: newSize,
+      size: newSize as HiringFrontendTakeHomePizzaSize,
       totalPrice: formData.type !== '' ? calculatePrice(prev.type, newSize, prev.toppings || []): 0
     }));
   };
@@ -51,18 +54,17 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
   const modifyDefaultTopping = (topping: string, operation: string) => {
     topping = topping.split('_').join(' ')
     if (operation === 'exclude' && formData.type !== 'custom' && pizzaData[formData.type].toppings.includes(topping.split('_').join(' '))) {
-        setFormData((prev: FormPizza) => ({
+        setFormData((prev: FormPizza) => {
+          const prevToppings: HiringFrontendTakeHomePizzaToppings[] | undefined = prev.toppingExclusions;
+          return {
             ...prev,
-            toppingExclusions: [...prev.toppingExclusions, topping]
-        }));
+            toppingExclusions: [...prevToppings, topping]
+        }});
     } else if (operation === 'exclude') {
       
         setFormData((prev: FormPizza) => {
-            const toppings = [...prev.toppings]; 
+            const toppings: PizzaTopping[] = prev.toppings ? [...prev.toppings] : []; 
             const toppingIndex = toppings.findIndex(currTopping => currTopping.name.split('_').join(' ') === topping); 
-            console.log(topping, 'topping')
-            console.log(toppings[0].name, 'newState');
-            console.log(toppingIndex, 'itemIndex')
             toppings.splice(toppingIndex, 1)
             if(toppingIndex === -1) return {...prev}
            return ( {
@@ -74,7 +76,7 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
     } else{
         setFormData((prev: FormPizza) => {
                 const toppings = [...prev.toppingExclusions]; 
-                const toppingIndex = toppings.indexOf(topping);
+                const toppingIndex = toppings.indexOf(topping as HiringFrontendTakeHomePizzaToppings);
                 toppings.splice(toppingIndex, 1)
                return ( {
                 ...prev,
@@ -86,18 +88,17 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
   }
 
   const handleToppingAmount = (topping: string, amount: 'none' | 'light' | 'regular' | 'extra') => {
-    console.log('HERe')
     setFormData((prev: FormPizza) => {
 
-        const newState = [...prev.toppings]
+        const newState = prev.toppings ? [...prev.toppings] : [];
 
         const itemIndex = newState.findIndex((currTopping: PizzaTopping ) => currTopping.name === topping); 
         console.log(topping, 'topping')
         console.log(newState, 'newState');
         console.log(itemIndex, 'itemIndex')
         const newTopping = {
-            name: topping,
-            quantity: amount,
+            name: topping as HiringFrontendTakeHomePizzaToppings,
+            quantity: amount as HiringFrontendTakeHomeToppingQuantity,
             price: toppings[topping][amount]
         }
 
@@ -130,7 +131,7 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
           </div>
           <div className="topping-amounts">
            { pizzaData[formData.type].toppings.includes(topping.split('_').join(' ')) ? 
-                (formData?.toppingExclusions?.includes(topping.split('_').join(' ')) ? <ToppingAmountButton 
+                (formData?.toppingExclusions?.includes(topping.split('_').join(' ') as HiringFrontendTakeHomePizzaToppings) ? <ToppingAmountButton 
                 onClick={() => modifyDefaultTopping(topping, 'include')}
                 // selected={formData.toppings?.find(t => t.name == topping)?.quantity === 'none' || false } 
                 selected={false}
@@ -145,7 +146,7 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
            : (<>
             <ToppingAmountButton 
               onClick={() => modifyDefaultTopping(topping, 'exclude')}
-             selected={formData.toppings?.map(t => t.quantity).includes(topping)} 
+             selected={formData.toppings?.map(t => t.quantity).includes(topping as HiringFrontendTakeHomeToppingQuantity)} 
             >
               {`None`}
             </ToppingAmountButton> 

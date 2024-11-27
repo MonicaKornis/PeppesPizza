@@ -52,12 +52,13 @@ export type FormPizza =  {
   type: HiringFrontendTakeHomePizzaType | '';
   size: HiringFrontendTakeHomePizzaSize | '';
   toppings?: PizzaTopping[];
-  toppingExclusions?: HiringFrontendTakeHomePizzaToppings[];
+  toppingExclusions: HiringFrontendTakeHomePizzaToppings[];
   quantity: number;
   totalPrice: number;
+  id: string;
 }
 
-type OrderItem = {
+export type OrderItem = {
   id: string;
   pizza: Pizza;
 };
@@ -182,14 +183,14 @@ export const PIZZA_SIZES: Record<PizzaSize, PizzaSizeInfo> = {
   }
 };
 
-export interface CartPizza {
-  id: string;
-  size: PizzaSize;
-  type: PizzaType;
-  toppings: Topping[];
-  price: number;
-  quantity: number;
-}
+// export interface CartPizza {
+//   id: string;
+//   size: PizzaSize;
+//   type: PizzaType;
+//   toppings: Topping[];
+//   price: number;
+//   quantity: number;
+// }
 
 export interface CustomerFormData {
 deliveryType?: string;
@@ -205,21 +206,21 @@ city: string;
 state: string; 
 }
 
-export interface CartState {
-  customerInfo: {
-    deliveryType: DeliveryType;
-    email: string;
-    name: string;
-    phone: string;
-    paymentType: PaymentOption;
-    addressLine1?: string; 
-    city?: string; 
-    state?: string; 
-    zipCode?: string; 
-    creditCardNumber?: string;
-    cvv?: string; 
-    expiryDate?: Date;
-  }
-  items: CartPizza[];
-  totalCost: number;
-}
+// export interface CartState {
+//   customerInfo: {
+//     deliveryType: DeliveryType;
+//     email: string;
+//     name: string;
+//     phone: string;
+//     paymentType: PaymentOption;
+//     addressLine1?: string; 
+//     city?: string; 
+//     state?: string; 
+//     zipCode?: string; 
+//     creditCardNumber?: string;
+//     cvv?: string; 
+//     expiryDate?: Date;
+//   }
+//   items: CartPizza[];
+//   totalCost: number;
+// }

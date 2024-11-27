@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { CustomerFormData } from '../../types/index';
 import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Select, Input, ErrorMessage , SummaryTitle, OrderSummary} from './style.js' ;
   
@@ -18,7 +17,7 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
         expiryDate: undefined,
       });
 
-      const [formErrors, setFormErrors] = useState<CustomerFormData>({
+      const [formErrors] = useState<CustomerFormData>({
         deliveryType: '',
         email: '',
         name: '',
@@ -43,7 +42,7 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
         }});
     };
 
-    const handleSubmit = (e: unknown) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
     }
   
@@ -120,13 +119,9 @@ import {FormContainer, Title, SubmitButton, FormSection, Label, SummaryText, Sel
 
         <OrderSummary>
           <SummaryTitle>Item Total</SummaryTitle>
-          {/* <SummaryText>Type: {formData.type || 'Not selected'}</SummaryText>
-          <SummaryText>Size: {formData.size || 'Not selected'}</SummaryText>
           <SummaryText>
-            Toppings: {formData.toppings.length ? formData.toppings.join(', ') : 'None selected'}
-          </SummaryText> */}
-          <SummaryText>
-            Price: {formData.price ? `${formData.price}` :'$0'}
+            {/* Price: {formData.price ? `${formData.price}` :'$0'}  PULL ITEMS FROM CONTEXT LATER TO CALCULATE*/} 
+            
           </SummaryText>
         </OrderSummary>
         <SubmitButton>Submit Order

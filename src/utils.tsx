@@ -1,18 +1,17 @@
-import { CartState, CartPizza } from './types';
+import { FormPizza } from './types';
 
-export const checkIfDuplicates= (newItem: CartPizza, cart: CartState): CartPizza | null => {
-    const items = cart.items;
-    let duplicate = null
+export const checkIfDuplicates = (newItem: FormPizza, cart: { items: FormPizza[]}): FormPizza | null => {
+    const items: FormPizza[] = cart.items;
+    let duplicate: FormPizza | null = null
     if(items.length) {
-        duplicate = items.find((item: CartPizza) =>  {
+        duplicate = items.find((item: FormPizza) =>  {
             const sizeEqual = newItem.size == item.size;
             const typeEqual = newItem.type == item.type;
-            const toppingsNewItem = newItem.toppings.sort()
-            const toppingsExistingItem = item.toppings.sort();
-            const toppingsEqual =  (toppingsNewItem.length === toppingsExistingItem.length) && toppingsNewItem.every((item, index) => item === toppingsExistingItem[index])
+            const toppingsNewItem = newItem.toppings?.sort()
+            const toppingsExistingItem = item.toppings?.sort();
+            const toppingsEqual =  toppingsExistingItem && (toppingsNewItem?.length === toppingsExistingItem?.length) && toppingsNewItem?.every((item, index) => item === toppingsExistingItem[index])
             if(sizeEqual && typeEqual && toppingsEqual) {
                 duplicate = item; 
-                console.log('HERE')
                 return true;
             }
         }) || null;

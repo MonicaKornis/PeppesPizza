@@ -1,8 +1,9 @@
+// @ts-nocheck
 import {  useState } from "react";
-import {v1 as uuid} from 'uuid';
+import { v1 as uuid} from 'uuid';
 import { CartContext } from "./cart-context";
-import { CartPizza, CartState } from "./../../types/index"
-import { checkIfDuplicates } from './../../utils';
+import { FormPizza, CartState } from "./../../types/index"
+import { checkIfDuplicates } from './../../utils.tsx';
 
 export default function CartProvider({
   children,
@@ -12,8 +13,8 @@ export default function CartProvider({
   const [cart, updateCart] = useState({ customerInfo: {}, items: [], totalCost: 0});
 
 
-  const addAmmountToCart = (item: CartPizza, ammount: number) => {
-    const existingItem: CartPizza | null = checkIfDuplicates(item, cart);
+  const addAmmountToCart = (item: FormPizza, ammount: number) => {
+    const existingItem: FormPizza | null = checkIfDuplicates(item, cart);
     const newItem = existingItem ? { ...existingItem, quantity: existingItem.quantity + ammount } : { ...item, id: new uuid(), quantity: ammount};
     // console.log(existingItem)
     updateCart((prevCart: CartState) => {

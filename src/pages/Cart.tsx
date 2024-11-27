@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AddToCartButton from './../components/AddToCartButton/AddToCardButton.tsx';
 import { useCart } from './../context/cart/cart-context';
 import { useNavigate } from 'react-router-dom';
-import { PizzaTopping, Pizza } from '../types/index.ts';
+import { PizzaTopping, FormPizza } from '../types/index.ts';
 
 
 // Styled Components
@@ -148,19 +148,20 @@ const Cart = () => {
       </CartHeader>
 
       <ItemsContainer>
-        {items.map((pizza: Pizza, index: number) => (
+        {items.map((pizza: FormPizza, index: number) => (
           <PizzaCard key={index}>
             <PizzaHeader>
               <PizzaInfo>
                 <PizzaName>
-                  {pizza.size.name} {pizza.type} Pizza
+                  {pizza.type} Pizza
                 </PizzaName>
-                {pizza.toppings.length > 0 && (
+                <Toppings>Size {pizza.size}</Toppings>
+                {pizza.toppings && pizza.toppings.length > 0 && (
                   <Toppings>
                     Extra Toppings: {pizza.toppings.map((t: PizzaTopping) => t.name).join(', ')}
                   </Toppings>
                 )}
-                   {pizza.toppingExclusions.length > 0 && (
+                   {pizza.toppingExclusions && pizza.toppingExclusions.length > 0 && (
                   <Toppings>
                     Excluded Toppings: {pizza.toppingExclusions.map((t: string) => t).join(', ')}
                   </Toppings>

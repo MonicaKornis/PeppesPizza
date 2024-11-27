@@ -1,9 +1,9 @@
 import { Routes, Route, Link } from "react-router-dom"
 import './App.css';
-import Home from './pages/Home';
-import Menu from './pages/Menu';
+import Home  from './pages/Home.tsx';
+import Menu from './pages/Menu.tsx';
 import Cart from './pages/Cart.tsx';
-import Checkout from './pages/Checkout';
+import Checkout from './pages/Checkout.tsx';
 import CartProvider from "./context/cart/CartProvider";
 
 const App = () => (

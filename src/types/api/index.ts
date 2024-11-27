@@ -1,3 +1,5 @@
+// @ts-nocheck
+//REMOVE LATER
 /**
  * Pizza API Documentation
  * Base URL: https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home
@@ -32,6 +34,7 @@ interface GetPizzaPricingResponse {
  * GET /specialty-pizzas
  * Retrieves the list of specialty pizzas
  */
+
 type GetAllSpecialtyPizzasRequest = () => Promise<{
   specialtyPizzas: SpecialtyPizza[];
 }>;
