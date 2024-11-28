@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { HiringFrontendTakeHomeOrderRequest } from '../../types';
+import { HiringFrontendTakeHomeOrderRequest, HiringFrontendTakeHomeOrderStatus } from '../../types';
+import { editPizzaStatus } from './../../api/service';
 import Pagination from './../../components/PaginationControls/PaginationControls';
+
 
 // Styled Components for Table
 const TableContainer = styled.div`
@@ -55,12 +57,31 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
   const [perPage, setPerPage] = useState(5);
   const [currPage, setCurrPage] = useState(0);
   const totalPages = Math.floor(orders.length/perPage);
+  const [updateErrors, setUpdateErrors] = useState('');
+  const [updatedSelectVal, setUpdatedSelectVal] = useState('');
 
-  console.log(Math.floor(orders.length/perPage), 'cals')
-  console.log(totalPages, 'totalapages')
+  const [editRowId, setEditRowId] = React.useState(null);
+
+  const handleEditClick = (rowId) => {
+    setEditRowId(rowId);
+  };
+
+  const handleSelectChange = (selectVal: HiringFrontendTakeHomeOrderStatus) => {
+    setUpdatedSelectVal(selectVal);
+  };
+
+  const handleSaveClick = (orderId: string) => {
+    try {
+      editPizzaStatus(orderId, updatedSelectVal as HiringFrontendTakeHomeOrderStatus)
+    } catch(err) {
+      setUpdateErrors(JSON.stringify(err));
+    }
+  }
+
   return (
     <>
     <TableContainer>
+      {updateErrors ? <div>{updateErrors}</div> : null}
       <StyledTable>
         <thead>
           <tr>
@@ -71,7 +92,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
             <TableHeader>Payment Method</TableHeader>
             <TableHeader>Order Type</TableHeader>
             <TableHeader>Status</TableHeader>
-            {/* <TableHeader>Items Count</TableHeader> */}
+            <TableHeader>Edit</TableHeader>
           </tr>
         </thead>
         <tbody>
@@ -87,14 +108,14 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
               <TableCell>{order.type}</TableCell>
               <TableCell>
                 <p>Order Status</p>
-                <select>
+                <select disabled={order.id !== editRowId} onChange={(e) => handleSelectChange(e.target.value as HiringFrontendTakeHomeOrderStatus)}>
                   <option value='pending' selected={order.status === 'pending'}>
                     Pending
                   </option>
                   <option value='preparing' selected={order.status === 'preparing'}>
                     Preparing
                   </option>
-                  <option value='ready' selected={order.status === 'ready'}>
+                  <option value='ready' selected={order.status === 'ready'}>Ready
                   </option>
                   <option value='delivered' selected={order.status === 'delivered'}>
                     Delivered
@@ -103,7 +124,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
                     Cancelled
                   </option>
                 </select></TableCell>
-              {/* <TableCell>{order.items.length}</TableCell> */}
+              <TableCell>{editRowId === order.id ? <button onClick={() => handleSaveClick(order.id || '')}>Save</button> : <button onClick={() => handleEditClick(order.id)}>Edit</button>}</TableCell>
             </TableRow>
           ))}
         </tbody>
@@ -113,7 +134,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
           onChange={(newPerPage) => {
             setPerPage(newPerPage);
             setCurrPage(0);
-            setTotalPages(Math.floor(orders.length / newPerPage));
+            // setTotalPages(Math.floor(orders.length / newPerPage));
           }}
          perPage={perPage}
          currPage={currPage}

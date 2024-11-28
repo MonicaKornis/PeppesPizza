@@ -1,6 +1,6 @@
-import { HiringFrontendTakeHomeOrderRequest } from "../types";
+import { HiringFrontendTakeHomeOrderRequest, HiringFrontendTakeHomeOrderStatus } from "../types";
 
-export const createPizzaOrder = async function submitOrder(orderData: HiringFrontendTakeHomeOrderRequest) {
+export const createPizzaOrder = async (orderData: HiringFrontendTakeHomeOrderRequest) => {
     const response = await fetch('https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -13,6 +13,25 @@ export const createPizzaOrder = async function submitOrder(orderData: HiringFron
     }
    
     return await response.json();
+}
+
+export const editPizzaStatus = async (orderId: string, orderStatus: HiringFrontendTakeHomeOrderStatus) => {
+  const response = await fetch(`https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      locationId: 'm-kornis',
+      orderId: orderId,
+      status: orderStatus
+    })
+  });
+ 
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Order update failed');
+  }
+ 
+  return await response.json();
 }
 
 export const fetchMenuData = async () => {
@@ -29,6 +48,54 @@ export const fetchAllOrders = async () => {
 
   const response = await fetch(url, {
     method: 'GET',
+  });
+ 
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('Error response:', {
+      status: response.status,
+      statusText: response.statusText,
+      errorText
+    });
+
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+  }
+ 
+  return await response.json();
+};
+
+export const fetchOrderById = async (orderId: string) => {
+  const url = `https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza?locationId=m-kornis`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    body: JSON.stringify({
+      orderId: orderId,
+    })
+  });
+ 
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('Error response:', {
+      status: response.status,
+      statusText: response.statusText,
+      errorText
+    });
+
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+  }
+ 
+  return await response.json();
+};
+
+export const cancelOrder = async (orderId: string) => {
+  const url = `https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza/cancel?locationId=m-kornis`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      orderId: orderId,
+    })
   });
  
   if (!response.ok) {

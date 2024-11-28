@@ -13,7 +13,7 @@ const Navbar = styled.nav`
 const NavItem = styled.div`
     text-decoration: none;
     font-family: "Zilla Slab";
-    font-size: 1.2rem;
+    font-size: 1rem;
     transition: color 0.3s ease;
 
     &:hover {
@@ -34,7 +34,10 @@ const NavBar = () => {
         <Link to="/cart">Cart</Link>
       </NavItem>
       <NavItem>
-        <Link to="/orderstatus">View All Orders</Link>
+        <Link to="/order-dashboard">View All Orders</Link>
+      </NavItem>
+      <NavItem>
+        <Link to="/order-status">Check Orders Status</Link>
       </NavItem>
     </Navbar>
   );

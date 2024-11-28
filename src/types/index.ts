@@ -103,6 +103,7 @@ export type HiringFrontendTakeHomeOrderRequest = {
   creditCardNumber?: string;
   type: HiringFrontendTakeHomeOrderType;
   status?: string;
+  id?: string;
 };
 
 export type HiringFrontendTakeHomeOrderResponse =
