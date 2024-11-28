@@ -29,7 +29,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       try {
         const response = await getAuthUser();
 
-        const { authToken, AuthUser } = response[1];
+        // @ts-ignore
+        const { authToken, AuthUser } = response && response[1];
 
         setAuthToken(authToken);
         setCurrentUser(AuthUser);

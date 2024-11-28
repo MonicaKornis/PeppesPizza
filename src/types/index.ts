@@ -198,7 +198,7 @@ export interface CustomerFormData {
   paymentType?: HiringFrontendTakeHomePaymentMethod;
   creditCardNumber?: string;
   cvv?: string; 
-  expiryDate?: Date;
+  expiryDate?: string;
   addressLine1?: string;
   zipCode: string;
   city: string;
@@ -222,22 +222,3 @@ export interface CustomerFormErrors {
   firstName: string;
   lastName: string;
 }
-
-// export interface CartState {
-//   customerInfo: {
-//     deliveryType: DeliveryType;
-//     email: string;
-//     name: string;
-//     phone: string;
-//     paymentType: PaymentOption;
-//     addressLine1?: string; 
-//     city?: string; 
-//     state?: string; 
-//     zipCode?: string; 
-//     creditCardNumber?: string;
-//     cvv?: string; 
-//     expiryDate?: Date;
-//   }
-//   items: CartPizza[];
-//   totalCost: number;
-// }

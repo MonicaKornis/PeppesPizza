@@ -37,13 +37,14 @@ const AllOrders = () => {
     if(isLoading) return <PageContainer><Spinner /></PageContainer>;
     if(error) return <>{error}</>;
 
-    const handleSaveClick = (orderId: string, selectedVal: string) => {
+    const handleSaveClick = (orderId: string, selectedVal?: string) => {
       try {
         editPizzaStatus(orderId, selectedVal as HiringFrontendTakeHomeOrderStatus)
       } catch(err) {
         setError(JSON.stringify(err));
       }
     }
+
 
     return (
         <div>

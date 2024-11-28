@@ -32,7 +32,6 @@ export const transformToTitleCase = (string: string) => {
 }
 
 export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza[], totalCost: number) => {
-    debugger
     const requestData = {
         items: ([] as OrderItem[]),
         locationId: 'm-kornis',
@@ -72,49 +71,12 @@ export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza
                 quantity: pizza.quantity,
                 totalPrice: pizza.totalPrice
             }
-        }
+        } as OrderItem
     })
     requestData.items = orderPizzas;
     return requestData;
 }
 
-
-// export type HiringFrontendTakeHomeOrderRequest = {
-//   //IMPORTANT: unique identifier for this pizza location (and your test)
-//   locationId: string;
-//   items: [
-//     {
-//       id: string;
-//       pizza: 
-//         {
-//           type: HiringFrontendTakeHomePizzaType;
-//           size: HiringFrontendTakeHomePizzaSize;
-//           // For specialty pizzas, we only add extra toppings in the toppings array
-//           // For custom pizzas, we charge for all toppings
-//           toppings?: PizzaTopping[];
-//           // For specialty pizzas, we can exclude toppings that are already included in the pizza
-//           toppingExclusions?: HiringFrontendTakeHomePizzaToppings[];
-//           quantity: number;
-//           totalPrice: number;
-//         };
-//     }
-//   ],
-//   customer: {
-        // firstName: string;
-        // lastName: string;
-        // email: string;
-        // deliveryAddress?: {
-        //     street: string;
-        //     city: string;
-        //     state: string;
-        //     zipCode: string;
-        // };
-        // };
-//   totalAmount: number;
-//   paymentMethod: HiringFrontendTakeHomePaymentMethod;
-//   creditCardNumber?: string;
-//   type: HiringFrontendTakeHomeOrderType;
-// };
 
 export const checkIfFormValid = (formData: CustomerFormData) => {
     if(formData.email?.length === 0 || formData.firstName?.length === 0 || formData.lastName?.length === 0 ||  !formData.deliveryType || !formData.paymentType) {

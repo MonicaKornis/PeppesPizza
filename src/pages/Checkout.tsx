@@ -16,7 +16,7 @@ const CheckoutContainer = styled.div`
 const Checkout = () => {
     const { cart, clearCart } = useCart();
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<OrderResponse | null>(null);
+    // const [data, setData] = useState<{} | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState('')
 
@@ -32,7 +32,7 @@ const Checkout = () => {
         zipCode: '',
         paymentType: HiringFrontendTakeHomePaymentMethod.Cash,
         creditCardNumber: '',
-        expiryDate: new Date(),
+        expiryDate: '',
         formInvalid: true,
         cvv: ''
       });
@@ -62,7 +62,7 @@ const Checkout = () => {
 
         try {
             const response = await createPizzaOrder(data);
-            setData(response);
+            // setData(response);
             setSuccessMessage( `Your order was submitted! Your order ID is: ${response.order.id}`)
             console.log(response, 'response')
             clearCart()
