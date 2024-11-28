@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAuth } from './../../context/AuthContext';
 
 // Styled Components
 const Navbar = styled.nav`
@@ -22,6 +23,7 @@ const NavItem = styled.div`
 `;
 
 const NavBar = () => {
+  const { authToken, currentUser }  = useAuth() || {};
   return (
     <Navbar>
       <NavItem>
@@ -33,11 +35,14 @@ const NavBar = () => {
       <NavItem>
         <Link to="/cart">Cart</Link>
       </NavItem>
-      <NavItem>
+      {currentUser?.role === 'admin' ? <NavItem>
         <Link to="/order-dashboard">View All Orders</Link>
-      </NavItem>
+      </NavItem> : null}
       <NavItem>
         <Link to="/order-status">Check Orders Status</Link>
+      </NavItem>
+      <NavItem>
+        <Link to="/login">{authToken ? `Logout` : `Login`}</Link>
       </NavItem>
     </Navbar>
   );

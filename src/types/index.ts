@@ -185,15 +185,12 @@ export const PIZZA_SIZES: Record<PizzaSize, PizzaSizeInfo> = {
   }
 };
 
-// export interface CartPizza {
-//   id: string;
-//   size: PizzaSize;
-//   type: PizzaType;
-//   toppings: Topping[];
-//   price: number;
-//   quantity: number;
-// }
 
+export interface AuthUser {
+  id: string;
+  email: string;
+  role: string;
+};
 export interface CustomerFormData {
   deliveryType?: HiringFrontendTakeHomeOrderType;
   email?: string;

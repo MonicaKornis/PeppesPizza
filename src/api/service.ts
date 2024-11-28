@@ -69,9 +69,6 @@ export const fetchOrderById = async (orderId: string) => {
 
   const response = await fetch(url, {
     method: 'GET',
-    // body: JSON.stringify({
-    //   orderId: orderId,
-    // })
   });
  
   if (!response.ok) {

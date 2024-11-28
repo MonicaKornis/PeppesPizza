@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+ // @ts-ignore
 import Spinner  from "./../assets/spinner.svg?react";
 import styled from "styled-components";
 import { editPizzaStatus, fetchAllOrders } from "../api/service";

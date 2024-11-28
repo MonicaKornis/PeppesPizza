@@ -1,6 +1,7 @@
 
 import styled from 'styled-components';
 import AddToCartButton from './../components/AddToCartButton/AddToCartButton.tsx';
+import { transformToTitleCase } from '../utils.tsx';
 import { useCart } from './../context/cart/cart-context';
 import { useNavigate } from 'react-router-dom';
 import { PizzaTopping, FormPizza } from '../types/index.ts';
@@ -158,12 +159,12 @@ const Cart = () => {
                 <Toppings>Size {pizza.size}</Toppings>
                 {pizza.toppings && pizza.toppings.length > 0 && (
                   <Toppings>
-                    Extra Toppings: {pizza.toppings.map((t: PizzaTopping) => t.name).join(', ')}
+                    Extra Toppings: {pizza.toppings.map((topping: PizzaTopping) => (transformToTitleCase(topping.name))).join(', ')}
                   </Toppings>
                 )}
                    {pizza.toppingExclusions && pizza.toppingExclusions.length > 0 && (
                   <Toppings>
-                    Excluded Toppings: {pizza.toppingExclusions.map((t: string) => t).join(', ')}
+                    Excluded Toppings: {pizza.toppingExclusions.map((topping: string) => (transformToTitleCase(topping))).join(', ')}
                   </Toppings>
                 )}
               </PizzaInfo>

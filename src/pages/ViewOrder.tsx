@@ -2,7 +2,8 @@ import {  useState } from "react";
 import styled from "styled-components";
 import { fetchOrderById, cancelOrder } from "../api/service";
 import OrdersTable from "../components/OrderTable/OrderTable";
-import Spinner  from "./../assets/spinner.svg?react";
+ // @ts-ignore
+import Spinner  from  "./../assets/spinner.svg?react";
 import { HiringFrontendTakeHomeOrderRequest } from "../types";
 
 const PageContainer = styled.div`
@@ -91,7 +92,7 @@ const AllOrders = () => {
             const orderData = await cancelOrder(orderId)
             setError('')
             setOrderData([orderData.order]);
-            setSuccess(true);
+            setSuccess(true)
         } catch(err) {
             console.error(err)
             setError(JSON.stringify(err))

@@ -120,13 +120,13 @@ export const checkIfFormValid = (formData: CustomerFormData) => {
     if(formData.email?.length === 0 || formData.firstName?.length === 0 || formData.lastName?.length === 0 ||  !formData.deliveryType || !formData.paymentType) {
         return false;
     }
-    if(formData.deliveryType === 'Delivery') {
+    if(formData.deliveryType === 'delivery') {
         if(formData.addressLine1?.length === 0 || formData.zipCode?.length === 0 || formData.state?.length === 0 || formData.city?.length === 0 ) {
             return false 
         }
     };
 
-    if(formData.paymentType === 'Credit') {
+    if(formData.paymentType === 'credit_card') {
         if(formData.creditCardNumber?.length === 0 || !formData.expiryDate || formData.cvv?.length === 0) {
             return false 
         }

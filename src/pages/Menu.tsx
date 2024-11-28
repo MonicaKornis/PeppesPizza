@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+ // @ts-ignore
 import Spinner  from "./../assets/spinner.svg?react";
 import PizzaOrderForm2 from '../components/PizzaOrderForm/PizzaOrderForm2';
 import { fetchMenuData } from './../api/service';
