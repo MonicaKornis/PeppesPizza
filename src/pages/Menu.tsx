@@ -48,8 +48,6 @@ const Menu = () =>  {
     fetchData();
   }, []); 
 
-  console.log(fetchedData)
-
   if(isLoading) return <PageContainer><Spinner /></PageContainer>;
   if (error) return <div>Error: {error}</div>;
 

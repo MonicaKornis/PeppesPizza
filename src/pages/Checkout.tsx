@@ -16,7 +16,6 @@ const CheckoutContainer = styled.div`
 const Checkout = () => {
     const { cart, clearCart } = useCart();
     const [isLoading, setIsLoading] = useState(false);
-    // const [data, setData] = useState<{} | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState('')
 
@@ -55,16 +54,11 @@ const Checkout = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(cart, 'cart')
         const data = formatDataForOrder(formData, cart.items, cart.totalCost)
-        // api call
-        console.log(data)
 
         try {
             const response = await createPizzaOrder(data);
-            // setData(response);
             setSuccessMessage( `Your order was submitted! Your order ID is: ${response.order.id}`)
-            console.log(response, 'response')
             clearCart()
           } catch (err) {
             setError(err instanceof Error ? err.message : 'Order submission failed');

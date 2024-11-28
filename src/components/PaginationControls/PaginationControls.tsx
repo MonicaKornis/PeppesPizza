@@ -16,8 +16,6 @@ type IPaginationControlsProps = {
     
 const PaginationControls: React.FC<IPaginationControlsProps> = ({onChange, currPage, totalPages, onChangePage}) => {
         const perPages = [5, 10, 20]
-        console.log(currPage);
-        console.log(totalPages)
         return (
           <PaginationContainer>
             <button onClick={() => onChangePage(currPage-1)} disabled={currPage <= 0}>Previous</button>

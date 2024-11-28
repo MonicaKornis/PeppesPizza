@@ -142,49 +142,22 @@ export interface PizzaSizeInfo {
   basePrice: number;
 }
 
-export enum PizzaSize {
-  SMALL = 'Small',
-  MEDIUM = 'Medium',
-  LARGE = 'Large',
-}
-
-export enum PizzaType {
-  PEPPERONI = 'Pepperoni',
-  SUPREME = 'Supreme',
-  MEAT_LOVERS = 'Meat-lovers',
-  VEGGIE = 'Veggie',
-  VEGAN = 'Vegan', 
-  PESTO = 'Pesto',
-  CUSTOM = 'Custom'
-}
-// export type PaymentOption = 'Cash' | 'Credit';
-
-// export type DeliveryType = 'Pickup' | 'Delivery';
-
-export type Topping = 'Cheese' | 'Onions' | 'Olives' | 'Pepperoni' | 'Sausage' | 'Peppers' | 'Beyond Pepperoni' | 'Vegan Cheese' | 'Pesto';
+// export enum PizzaType {
+//   PEPPERONI = 'Pepperoni',
+//   SUPREME = 'Supreme',
+//   MEAT_LOVERS = 'Meat-lovers',
+//   VEGGIE = 'Veggie',
+//   VEGAN = 'Vegan', 
+//   PESTO = 'Pesto',
+//   CUSTOM = 'Custom'
+// }
 
 export interface PizzaFormData {
-  type: PizzaType | '';
-  size: PizzaSize | '';
-  toppings: Topping[];
+  type: '';
+  size: HiringFrontendTakeHomePizzaSize | '';
+  toppings: HiringFrontendTakeHomePizzaToppings[];
   price: number;
 }
-
-export const PIZZA_SIZES: Record<PizzaSize, PizzaSizeInfo> = {
-  "Small": {
-    id: '1',
-    basePrice: 10.99,
-  },
-  "Medium": {
-    id: '2',
-    basePrice: 12.99,
-  },
- "Large": {
-    id: '2',
-    basePrice: 14.99,
-  }
-};
-
 
 export interface AuthUser {
   id: string;

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState } from 'react';
-import { PizzaSize, PizzaType, PizzaTopping, FormPizza, HiringFrontendTakeHomePizzaType, HiringFrontendTakeHomePizzaSize, HiringFrontendTakeHomeToppingQuantity, HiringFrontendTakeHomePizzaToppings } from '../../types/index';
+import { PizzaTopping, FormPizza, HiringFrontendTakeHomePizzaType, HiringFrontendTakeHomePizzaSize, HiringFrontendTakeHomeToppingQuantity, HiringFrontendTakeHomePizzaToppings } from '../../types/index';
 import {FormContainer, Title, MenuOption, ToppingAmountButton , FormSection, Label, SummaryText, Select, ToppingsContainer, ToppingItem, SummaryTitle, ToppingLabel, OrderSummary} from './style.ts';
 import AddToCartButton from './../AddToCartButton/AddToCartButton.tsx';
 import { transformToTitleCase } from './../../utils.tsx';
@@ -22,13 +22,12 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
   const calculatePrice = (type: string, size: string, toppings: PizzaTopping[]): number => {
     if (type === undefined || size === undefined) return 0;
     const basePrice =  pizzaData[formData.type].price[size] || 0;
-    // Calculate additional toppings price
-    const toppingPrice = toppings?.reduce((acc, curr) => acc + curr.price, 0); //calculate here
+    const toppingPrice = toppings?.reduce((acc, curr) => acc + curr.price, 0);
     return basePrice + toppingPrice;
   };
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    const selectedType = e.target.value as PizzaType | '';
+    const selectedType = e.target.value;
     setFormData((prev: FormPizza) => {
       return {
         ...prev,
@@ -41,7 +40,7 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
   };
 
   const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    const newSize = e.target.value as PizzaSize | ''
+    const newSize = e.target.value as HiringFrontendTakeHomePizzaSize | ''
     
     setFormData((prev: FormPizza) => ({
       ...prev,
@@ -93,9 +92,6 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
         const newState = prev.toppings ? [...prev.toppings] : [];
 
         const itemIndex = newState.findIndex((currTopping: PizzaTopping ) => currTopping.name === topping); 
-        console.log(topping, 'topping')
-        console.log(newState, 'newState');
-        console.log(itemIndex, 'itemIndex')
         const newTopping = {
             name: topping as HiringFrontendTakeHomePizzaToppings,
             quantity: amount as HiringFrontendTakeHomeToppingQuantity,
@@ -117,8 +113,6 @@ const PizzaOrderForm2 = ({toppings, pizzaData}) => {
       };
     });
   };
-
-  console.log(formData)
 
   const formButton = (!formData.type || !formData.size) ? null : 
     <AddToCartButton buttonType='add' orderData={formData}/>;

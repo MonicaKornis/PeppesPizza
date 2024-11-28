@@ -6,8 +6,6 @@ import { useCart } from './../context/cart/cart-context';
 import { useNavigate } from 'react-router-dom';
 import { PizzaTopping, FormPizza } from '../types/index.ts';
 
-
-// Styled Components
 const CartContainer = styled.div`
   max-width: 32rem;
   margin: 32px auto;

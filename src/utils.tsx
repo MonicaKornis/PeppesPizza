@@ -60,7 +60,6 @@ export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza
                 toppings: pizza.toppings?.map(toppingObj => {
                     
                     const formatedName = toppingObj ? toppingObj?.name?.split('_').join(' ') : '';
-                    console.log(formatedName, 'formatted name')
                     toppingObj.name = formatedName as HiringFrontendTakeHomePizzaToppings;
                     return {
                         ...toppingObj,

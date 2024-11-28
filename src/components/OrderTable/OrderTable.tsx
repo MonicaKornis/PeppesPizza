@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { HiringFrontendTakeHomeOrderRequest, HiringFrontendTakeHomeOrderStatus } from '../../types';
 import Pagination from './../../components/PaginationControls/PaginationControls';
 
-
-// Styled Components for Table
 const TableContainer = styled.div`
     width: 100%;
     overflow-x: auto;
@@ -50,7 +48,6 @@ const TableCell = styled.td`
   border-bottom: 1px solid #ddd;
 `;
 
-// Type for Orders Table Props
 interface OrdersTableProps {
   orders: HiringFrontendTakeHomeOrderRequest[];
   saveFunction: (orderId: string, selectedVal?: string) => void;
