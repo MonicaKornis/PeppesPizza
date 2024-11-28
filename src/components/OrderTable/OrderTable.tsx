@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HiringFrontendTakeHomeOrderRequest, HiringFrontendTakeHomeOrderStatus } from '../../types';
-import { editPizzaStatus } from './../../api/service';
 import Pagination from './../../components/PaginationControls/PaginationControls';
 
 
@@ -13,6 +12,10 @@ const TableContainer = styled.div`
     display: flex;
     justify-content: center;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;
 
 const StyledTable = styled.table`
@@ -50,14 +53,15 @@ const TableCell = styled.td`
 // Type for Orders Table Props
 interface OrdersTableProps {
   orders: HiringFrontendTakeHomeOrderRequest[];
+  saveFunction: (orderId: string, selectedVal?: string) => void;
+  type: 'cancel' | 'edit';
 }
 
-const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
+const OrdersTable: React.FC<OrdersTableProps> = ({ orders, saveFunction, type }) => {
 
   const [perPage, setPerPage] = useState(5);
   const [currPage, setCurrPage] = useState(0);
   const totalPages = Math.floor(orders.length/perPage);
-  const [updateErrors, setUpdateErrors] = useState('');
   const [updatedSelectVal, setUpdatedSelectVal] = useState('');
 
   const [editRowId, setEditRowId] = React.useState(null);
@@ -70,18 +74,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
     setUpdatedSelectVal(selectVal);
   };
 
-  const handleSaveClick = (orderId: string) => {
-    try {
-      editPizzaStatus(orderId, updatedSelectVal as HiringFrontendTakeHomeOrderStatus)
-    } catch(err) {
-      setUpdateErrors(JSON.stringify(err));
-    }
-  }
 
   return (
     <>
     <TableContainer>
-      {updateErrors ? <div>{updateErrors}</div> : null}
       <StyledTable>
         <thead>
           <tr>
@@ -124,7 +120,14 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
                     Cancelled
                   </option>
                 </select></TableCell>
-              <TableCell>{editRowId === order.id ? <button onClick={() => handleSaveClick(order.id || '')}>Save</button> : <button onClick={() => handleEditClick(order.id)}>Edit</button>}</TableCell>
+              {type === 'edit' ? <TableCell>{editRowId === order.id ? <button onClick={() => {
+                saveFunction(order.id || '', updatedSelectVal)
+                setEditRowId(null)
+                }}>Save</button> : <button onClick={() => handleEditClick(order.id)}>Edit</button>}</TableCell>
+                : (
+                  type === 'cancel' && order.status === 'pending' ?   <TableCell><button onClick={() => saveFunction(order.id || '')}>Cancel</button></TableCell> : null
+                )
+              }
             </TableRow>
           ))}
         </tbody>
@@ -134,7 +137,6 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
           onChange={(newPerPage) => {
             setPerPage(newPerPage);
             setCurrPage(0);
-            // setTotalPages(Math.floor(orders.length / newPerPage));
           }}
          perPage={perPage}
          currPage={currPage}

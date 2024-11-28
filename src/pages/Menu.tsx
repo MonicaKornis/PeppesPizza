@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
+import Spinner  from "./../assets/spinner.svg?react";
 import PizzaOrderForm2 from '../components/PizzaOrderForm/PizzaOrderForm2';
 import { fetchMenuData } from './../api/service';
+import styled from 'styled-components';
+
+const PageContainer = styled.div`
+  margin: 250px;
+`;
 
 const Menu = () =>  {
 
@@ -43,7 +49,7 @@ const Menu = () =>  {
 
   console.log(fetchedData)
 
-  if (isLoading) return <div>Loading...</div>;
+  if(isLoading) return <PageContainer><Spinner /></PageContainer>;
   if (error) return <div>Error: {error}</div>;
 
    return (

@@ -1,8 +1,13 @@
 import {  useState } from "react";
 import styled from "styled-components";
-import { fetchOrderById } from "../api/service";
+import { fetchOrderById, cancelOrder } from "../api/service";
 import OrdersTable from "../components/OrderTable/OrderTable";
+import Spinner  from "./../assets/spinner.svg?react";
 import { HiringFrontendTakeHomeOrderRequest } from "../types";
+
+const PageContainer = styled.div`
+    margin: 250px;
+`;
 
 const InputContainer = styled.div`
     margin: 66px auto;
@@ -53,46 +58,56 @@ export const SubmitButton = styled.button`
 
 const AllOrders = () => {
 
-    const [orderData, setorderData] = useState<HiringFrontendTakeHomeOrderRequest[]>([]);
-    const [isLoading, setIsLoading] = useState('');
+    const [orderData, setOrderData] = useState<HiringFrontendTakeHomeOrderRequest[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [orderId, setOrderId] = useState("");
+    const [success, setSuccess] = useState(false);
 
-    const handleInputChange = (e) => {
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setOrderId(e.target.value)
     }
-  
-    // useEffect(() => {
-    //   const fetchData = async () => {
-    //     try {
-    //       const data = await fetchAllOrders();
-    //       setorderData(data.orders);
-    //       setIsLoading(false);
-    //     } catch (err) {
-    //       console.log(err)
-    //       const errMessage = typeof err == 'string' ? err : JSON.stringify(err)
-    //       setError(errMessage);
-    //       setIsLoading(false);
-    //     }
-    //   };
-  
-    //   fetchData();
+
+    if(success) return <PageContainer><h3>{`You have successfully canceled your order #${orderId}!`}</h3></PageContainer>
+    if(isLoading) return <PageContainer><Spinner /></PageContainer>;
+    if(error) return  <PageContainer><div>{error}</div></PageContainer>;
 
 
+    const onClick = async () => {
+        try {
+            const orderData = await fetchOrderById(orderId)
+            setError('')
+            setOrderData([orderData.order]);
+        } catch(err) {
+            console.error(err)
+            setError(JSON.stringify(err))
+        }
+    }
 
-      // setorderData(orders)
-    // }, []); 
-
-    if(isLoading) return <>Loading..</>;
-    if(error) return <>{error}</>
+    const handleCancel = async () => {
+      setIsLoading(true);
+        try {
+            const orderData = await cancelOrder(orderId)
+            setError('')
+            setOrderData([orderData.order]);
+            setSuccess(true);
+        } catch(err) {
+            console.error(err)
+            setError(JSON.stringify(err))
+        } finally {
+          setIsLoading(false);
+        }
+    }
 
     return (
         <div>
             <InputContainer>
                 <Input onChange={handleInputChange}/>
-                <SubmitButton>Check Order Status</SubmitButton>
+                <SubmitButton onClick={onClick}>Check Order Status</SubmitButton>
             </InputContainer>
-          { orderData.length > 0 ? <OrdersTable orders={orderData}/> : null }
+            <div>{error}</div>
+          { orderData.length > 0 ? <OrdersTable orders={orderData} saveFunction={handleCancel} type='cancel'/> : null }
         </div>
     )
 }

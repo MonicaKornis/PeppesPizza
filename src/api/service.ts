@@ -65,13 +65,13 @@ export const fetchAllOrders = async () => {
 };
 
 export const fetchOrderById = async (orderId: string) => {
-  const url = `https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza?locationId=m-kornis`;
+  const url = `https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/pizza?locationId=m-kornis&orderId=${orderId}`;
 
   const response = await fetch(url, {
     method: 'GET',
-    body: JSON.stringify({
-      orderId: orderId,
-    })
+    // body: JSON.stringify({
+    //   orderId: orderId,
+    // })
   });
  
   if (!response.ok) {
@@ -93,6 +93,9 @@ export const cancelOrder = async (orderId: string) => {
 
   const response = await fetch(url, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({
       orderId: orderId,
     })

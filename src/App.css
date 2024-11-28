@@ -10,3 +10,21 @@
   a {
     text-decoration: none;
   }
+
+  a, a:visited, a:active {
+    color: inherit;
+  }
+
+
+  a:hover {
+    font-weight: bolder;
+  }
+
+  a::before {
+    display: block;
+    content: attr(title);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}

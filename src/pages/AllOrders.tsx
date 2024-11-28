@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
-import { fetchAllOrders } from "../api/service";
+import Spinner  from "./../assets/spinner.svg?react";
+import styled from "styled-components";
+import { editPizzaStatus, fetchAllOrders } from "../api/service";
 import OrdersTable from "../components/OrderTable/OrderTable";
-import { HiringFrontendTakeHomeOrderRequest } from "../types";
+import { HiringFrontendTakeHomeOrderRequest, HiringFrontendTakeHomeOrderStatus } from "../types";
+
+const PageContainer = styled.div`
+    margin: 250px;
+`;
 
 const AllOrders = () => {
 
@@ -24,18 +30,23 @@ const AllOrders = () => {
       };
   
       fetchData();
-
-
-
-      // setorderData(orders)
     }, []); 
 
-    if(isLoading) return <>Loading..</>;
-    if(error) return <>{error}</>
+    
+    if(isLoading) return <PageContainer><Spinner /></PageContainer>;
+    if(error) return <>{error}</>;
+
+    const handleSaveClick = (orderId: string, selectedVal: string) => {
+      try {
+        editPizzaStatus(orderId, selectedVal as HiringFrontendTakeHomeOrderStatus)
+      } catch(err) {
+        setError(JSON.stringify(err));
+      }
+    }
 
     return (
         <div>
-          <OrdersTable orders={orderData}/>
+          <OrdersTable orders={orderData} saveFunction={handleSaveClick} type='edit'/>
         </div>
     )
 }
