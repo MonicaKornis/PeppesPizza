@@ -55,10 +55,21 @@ export default function CartProvider({
     });
   };
 
+  const clearCart = () => {
+    updateCart(() => {
+      return {
+        items: [],
+        totalCost: 0
+      }
+    });
+  };
+
+
 
   const contextValue = (
    {
       cart,
+      clearCart,
       addAmmountToCart,
       updateAmmountInCart
     }

@@ -1,4 +1,4 @@
-import { FormPizza, CustomerFormData, OrderItem, HiringFrontendTakeHomePaymentMethod, HiringFrontendTakeHomeOrderType, HiringFrontendTakeHomePizzaType, HiringFrontendTakeHomePizzaSize } from './types';
+import { FormPizza, CustomerFormData, OrderItem, HiringFrontendTakeHomePaymentMethod, HiringFrontendTakeHomeOrderType, HiringFrontendTakeHomePizzaType, HiringFrontendTakeHomePizzaSize, HiringFrontendTakeHomePizzaToppings } from './types';
 import { v1 as uuid} from 'uuid';
 
 export const checkIfDuplicates = (newItem: FormPizza, cart: { items: FormPizza[]}): FormPizza | null => {
@@ -32,7 +32,7 @@ export const transformToTitleCase = (string: string) => {
 }
 
 export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza[], totalCost: number) => {
-
+    debugger
     const requestData = {
         items: ([] as OrderItem[]),
         locationId: 'm-kornis',
@@ -58,7 +58,16 @@ export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza
             pizza: {
                 type: pizza.type !== HiringFrontendTakeHomePizzaType.Custom ? HiringFrontendTakeHomePizzaType.Specialty : HiringFrontendTakeHomePizzaType.Custom,
                 size: pizza.size || HiringFrontendTakeHomePizzaSize.Large,
-                toppings: pizza.toppings,
+                toppings: pizza.toppings?.map(toppingObj => {
+                    
+                    const formatedName = toppingObj ? toppingObj?.name?.split('_').join(' ') : '';
+                    console.log(formatedName, 'formatted name')
+                    toppingObj.name = formatedName as HiringFrontendTakeHomePizzaToppings;
+                    return {
+                        ...toppingObj,
+                        name: formatedName, 
+                    }
+                }),
                 toppingExclusions: pizza.toppingExclusions,
                 quantity: pizza.quantity,
                 totalPrice: pizza.totalPrice

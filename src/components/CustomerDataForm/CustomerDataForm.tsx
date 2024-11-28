@@ -1,14 +1,14 @@
 
-// import React, {  } from 'react';
-// import { CustomerFormData, CustomerFormErrors } from '../../types/index';
+
 import { checkIfFormValid } from './../../utils.tsx';
 import {FormContainer, Title, SubmitButton, FormSection, Label, Select, Input, ErrorMessage} from './style.ts' ;
+import { CustomerFormData, HiringFrontendTakeHomePaymentMethod, CustomerFormErrors, HiringFrontendTakeHomeOrderType } from './../../types';
 
 
 type ICustomerDataFormProps = {
-  formData: any;
+  formData: CustomerFormData;
   setFormData: (formData) => void; 
-  formErrors: any;
+  formErrors: CustomerFormErrors;
   handleSubmit: (e: React.FormEvent) => void; 
 }
   
@@ -26,7 +26,7 @@ type ICustomerDataFormProps = {
 
     const formInvalid = !checkIfFormValid(formData);
 
-    const creditCardSection = formData.paymentType == "Credit" ? (<><Title>Credit Card Info</Title>
+    const creditCardSection = formData.paymentType == HiringFrontendTakeHomePaymentMethod.CreditCard ? (<><Title>Credit Card Info</Title>
         <FormSection>
            <Label>Credit Card Number</Label>
            <Input value={formData.creditCardNumber} type="number" name='creditCardNumber' onChange={handleChange} required/>
@@ -41,7 +41,7 @@ type ICustomerDataFormProps = {
            <Input name='cvv' type="number" value={formData.cvv} onChange={handleChange} required/>
         </FormSection></>) : null
 
-  const addressSection = formData.deliveryType == "Delivery" ? (<><Title>Delivery Info</Title>
+  const addressSection = formData.deliveryType == HiringFrontendTakeHomeOrderType.Delivery ? (<><Title>Delivery Info</Title>
     <FormSection>
        <Label>Address</Label>
        <Input value={formData.addressLine1} name='addressLine1' onChange={handleChange} required/>

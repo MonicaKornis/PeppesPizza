@@ -10,13 +10,16 @@ import { createPizzaOrder } from './../api/service';
 const CheckoutContainer = styled.div`
     display: flex;
     justify-content: center;
+    margin: 40px;
 `;
 
 const Checkout = () => {
-    const { cart } = useCart();
+    const { cart, clearCart } = useCart();
     const [isLoading, setIsLoading] = useState(false);
-    const [dataRes, setData] = useState<OrderResponse | null>(null);
+    const [data, setData] = useState<OrderResponse | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState('')
+
 
     const [formData, setFormData] = useState<CustomerFormData>({
         deliveryType: HiringFrontendTakeHomeOrderType.Pickup,
@@ -29,7 +32,7 @@ const Checkout = () => {
         zipCode: '',
         paymentType: HiringFrontendTakeHomePaymentMethod.Cash,
         creditCardNumber: '',
-        expiryDate: undefined,
+        expiryDate: new Date(),
         formInvalid: true,
         cvv: ''
       });
@@ -60,18 +63,23 @@ const Checkout = () => {
         try {
             const response = await createPizzaOrder(data);
             setData(response);
+            setSuccessMessage( `Your order was submitted! Your order ID is: ${response.order.id}`)
+            console.log(response, 'response')
+            clearCart()
           } catch (err) {
             setError(err instanceof Error ? err.message : 'Order submission failed');
           } finally {
             setIsLoading(false);
           }
     }
-  
-    console.log(dataRes)
 
-    if(cart.items.length === 0) return (<h1>Your cart is empty!</h1>)
+    if(successMessage) return (<CheckoutContainer><h1>{successMessage}</h1></CheckoutContainer>);
+    if(cart.items.length === 0) return (<CheckoutContainer><h1>Your cart is empty!</h1></CheckoutContainer>)
+    if(isLoading) return <CheckoutContainer><h1>Submitting Order...</h1></CheckoutContainer>;
+
     return (
         <CheckoutContainer>
+        {error ? <div>{error}</div> : null} 
         <CustomerDataForm handleSubmit={handleSubmit} formErrors={formErrors} formData={formData} setFormData={setFormData}/>
         <OrderSummary pizzas={cart.items} totalCost={cart.totalCost}/>
         </CheckoutContainer>

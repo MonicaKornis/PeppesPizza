@@ -102,7 +102,7 @@ export type HiringFrontendTakeHomeOrderRequest = {
   paymentMethod: HiringFrontendTakeHomePaymentMethod;
   creditCardNumber?: string;
   type: HiringFrontendTakeHomeOrderType;
-  status: string;
+  status?: string;
 };
 
 export type HiringFrontendTakeHomeOrderResponse =
@@ -194,7 +194,7 @@ export const PIZZA_SIZES: Record<PizzaSize, PizzaSizeInfo> = {
 // }
 
 export interface CustomerFormData {
-  deliveryType?: string;
+  deliveryType?: HiringFrontendTakeHomeOrderType;
   email?: string;
   name?: string;
   paymentType?: HiringFrontendTakeHomePaymentMethod;

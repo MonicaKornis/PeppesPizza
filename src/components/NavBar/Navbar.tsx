@@ -34,7 +34,7 @@ const NavBar = () => {
         <Link to="/cart">Cart</Link>
       </NavItem>
       <NavItem>
-        <Link to="/orderstatus">View Order Status</Link>
+        <Link to="/orderstatus">View All Orders</Link>
       </NavItem>
     </Navbar>
   );

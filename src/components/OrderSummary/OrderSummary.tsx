@@ -38,7 +38,6 @@ const TotalSection = styled.div`
 
 const OrderSummary: React.FC<{ pizzas: FormPizza[], totalCost: number }> = ({ pizzas, totalCost }) => {
   // Calculate total order amount
-
   return (
     <OrderSummaryContainer>
       <h2>Order Summary</h2>
