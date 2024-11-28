@@ -32,8 +32,7 @@ export const transformToTitleCase = (string: string) => {
 }
 
 export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza[], totalCost: number) => {
-    // console.log(formData, 'form');
-    // console.log(pizzas)
+
     const requestData = {
         items: ([] as OrderItem[]),
         locationId: 'm-kornis',
@@ -57,7 +56,7 @@ export const formatDataForOrder = (formData: CustomerFormData, pizzas: FormPizza
         return {
             id: pizza.id || uuid(),
             pizza: {
-                type: pizza.type || HiringFrontendTakeHomePizzaType.Custom,
+                type: pizza.type !== HiringFrontendTakeHomePizzaType.Custom ? HiringFrontendTakeHomePizzaType.Specialty : HiringFrontendTakeHomePizzaType.Custom,
                 size: pizza.size || HiringFrontendTakeHomePizzaSize.Large,
                 toppings: pizza.toppings,
                 toppingExclusions: pizza.toppingExclusions,

@@ -23,3 +23,41 @@ export const fetchMenuData = async () => {
         return resp.json();
     }));
 };
+
+// export const fetchAllOrders = async () => {
+//   const url = 'https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/specialty-pizzas/pizzas?' +  new URLSearchParams({
+//     locationId: 'm-kornis'
+// }).toString();
+
+//   const response = await fetch(url)
+ 
+//   if (!response.ok) {
+//     const errorData = await response.json();
+//     throw new Error(errorData.message || 'Order submission failed');
+//   }
+ 
+//   return await response.json();
+// };
+
+
+export const fetchAllOrders = async () => {
+  const url = `https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home/specialty-pizzas/pizzas?locationId=m-kornis`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+  });
+ 
+  if (!response.ok) {
+    // Log more details about the error
+    const errorText = await response.text();
+    console.error('Error response:', {
+      status: response.status,
+      statusText: response.statusText,
+      errorText
+    });
+
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+  }
+ 
+  return await response.json();
+};

@@ -102,6 +102,7 @@ export type HiringFrontendTakeHomeOrderRequest = {
   paymentMethod: HiringFrontendTakeHomePaymentMethod;
   creditCardNumber?: string;
   type: HiringFrontendTakeHomeOrderType;
+  status: string;
 };
 
 export type HiringFrontendTakeHomeOrderResponse =

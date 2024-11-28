@@ -4,7 +4,7 @@ import Home  from './pages/Home.tsx';
 import Menu from './pages/Menu.tsx';
 import Cart from './pages/Cart.tsx';
 import Checkout from './pages/Checkout.tsx';
-import OrderStatus from './pages/OrderStatus'
+import AllOrders from './pages/AllOrders.tsx'
 import CartProvider from "./context/cart/CartProvider";
 import NavBar from "./components/NavBar/Navbar.tsx";
 
@@ -18,7 +18,7 @@ const App = () => (
       <Route path="/menu" element={ <Menu/> } />
       <Route path="/cart" element={ <Cart/> } />
       <Route path="/checkout" element={ <Checkout/> } />
-      <Route path="/orderstatus" element={ <OrderStatus/> } />
+      <Route path="/orderstatus" element={ <AllOrders/> } />
     </Routes>
     </CartProvider>
 </div>
